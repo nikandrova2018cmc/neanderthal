@@ -1,3 +1,5 @@
 You can write ideas or what you've done here.
 
 "data model.ipynb" includes data simulation code with patameters mentioned in https://is.gd/80Z6H6
+
+You can run a script with "%run testScript.py"

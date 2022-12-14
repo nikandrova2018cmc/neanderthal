@@ -1,7 +1,6 @@
 import msprime
 
 def main():
-
     # Times are provided in years, so we convert into generations.
     generation_time = 29
     T_HOM = 575e3 / generation_time
@@ -54,8 +53,13 @@ def main():
     demography.add_population_split(time=T_ARC, derived=["ND", "DN"], ancestral="ARC")
     demography.sort_events()
 
-    ts = msprime.sim_ancestry({"HUM": 4}, demography=demography)
+    # Recombination rate is set to the average value for humans. 
+    # record_migrations=true  is better when we want to do some ancestry analysis afterward, it offers more tools.
+    ts = msprime.sim_ancestry({"HUM": 4}, demography=demography, ploidy = 1, sequence_length=10000000,recombination_rate=2.5e-9,record_migrations=True, random_seed=543212) 
+    
+     # We add mutations, rate is set to the average value for humans, but in real life it actually varies depending on the position on the chromosome.
+    ts = msprime.sim_mutations(ts, rate=1.25e-8, random_seed=4321)    
 
-
+    
 if __name__ == "__main__":
     main()
