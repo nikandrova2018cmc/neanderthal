@@ -94,21 +94,23 @@ ts = msprime.sim_mutations(ts, rate=1.25e-8, random_seed=4321)
 
 tracts = core.clean_tracts(core.get_migrating_tracts(ts))
 
-seq = core.createSeqObs(ts,10000,0,1,400,'Af')
+
+cut = 10000
+seq = core.createSeqObs(ts,cut,0,1,400,'Af')
+
 
 print("Positions (given as intervals) in the genome inherited from a Neanderthal individual: \n")
-print(tracts)
-print("\n Number of mutations that are present in the individual from Eurasia, but absent from individuals from Africa. Genome is cut in segments of size 10000. \n")
-print(seq)
+print(tracts/cut)
+#print("\n Number of mutations that are present in the individual from Eurasia, but absent from individuals from Africa. Genome is cut in segments of size 10000. \n")
+#print(seq)
 
 
 states = [0,1]
-cut = 10000
 S = HMMS.initS(0.95)
 A = HMMS.initA(T_INT,2.5e-9,cut,0.05)
 B = HMMS.initB(1.25e-8,cut,3700,T_HOM)
 res = HMMS.viterbi( seq, S, A, B)
 tractsHMM = core.get_HMM_tracts(res)
-print(tractsHMM)
+print(tractsHMM[1])
 
 
