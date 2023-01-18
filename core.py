@@ -75,3 +75,15 @@ def clean_tracts(tractInit):
                     tract[j,1]=save1
                     flag=True
     return tract
+
+def get_HMM_tracts(seq):
+    migrating_tracts = []
+    for i in range(2):
+        migrating_tracts.append([])
+    start=0
+    for i in range(1,len(seq)):
+        if seq[i]!=seq[i-1]:
+            migrating_tracts[seq[i-1]].append([start,i-1])
+            start=i
+    migrating_tracts[seq[len(seq)-1]].append([start,len(seq)-1])
+    return migrating_tracts

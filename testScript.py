@@ -1,5 +1,6 @@
 import msprime
 import core
+import HMMS
 
 from importlib import reload
 
@@ -76,7 +77,7 @@ demography.add_population(
     growth_rate=speed_of_growth,
 )
 
-demography.add_admixture(time=T_INT, derived="EuAs2", ancestral=["EuAs", "ND"], proportions=[0.5, 0.5])
+demography.add_admixture(time=T_INT, derived="EuAs2", ancestral=["EuAs", "ND"], proportions=[0.95, 0.05])
 demography.add_population_split(time=3700, derived=["Af", "EuAs"], ancestral="HUM")
 demography.add_population_split(time=T_ARC, derived=["ND", "DN"], ancestral="ARC")
 demography.add_population_split(time=T_HOM, derived=["ARC", "HUM"], ancestral="HOM")
@@ -85,7 +86,7 @@ demography.sort_events()
 
 # Recombination rate is set to the average value for humans. 
 # record_migrations=true  is better when we want to do some ancestry analysis afterward, it offers more tools.
-ts = msprime.sim_ancestry({"EuAs2": 1 , "Af": 100}, demography=demography, ploidy = 1,sequence_length=4000000,recombination_rate=2.5e-9,record_migrations=True, random_seed=5432) 
+ts = msprime.sim_ancestry({"EuAs2": 1 , "Af": 100}, demography=demography, ploidy = 1,sequence_length=10000000,recombination_rate=2.5e-9,record_migrations=True, random_seed=5432) 
 
  # We add mutations, rate is set to the average value for humans, but in real life it actually varies depending on the position on the chromosome.
 ts = msprime.sim_mutations(ts, rate=1.25e-8, random_seed=4321)    
@@ -99,4 +100,15 @@ print("Positions (given as intervals) in the genome inherited from a Neanderthal
 print(tracts)
 print("\n Number of mutations that are present in the individual from Eurasia, but absent from individuals from Africa. Genome is cut in segments of size 10000. \n")
 print(seq)
+
+
+states = [0,1]
+cut = 10000
+S = HMMS.initS(0.95)
+A = HMMS.initA(T_INT,2.5e-9,cut,0.05)
+B = HMMS.initB(1.25e-8,cut,3700,T_HOM)
+res = HMMS.viterbi( seq, S, A, B)
+tractsHMM = core.get_HMM_tracts(res)
+print(tractsHMM)
+
 
