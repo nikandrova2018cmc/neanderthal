@@ -1,4 +1,6 @@
-
+import numpy as np
+from scipy.interpolate import make_interp_spline
+import matplotlib.pyplot as plt
 
 def comparaison(reality,calculated):
     total_gen = sum(list(map(sum,reality)))
@@ -20,7 +22,20 @@ def comparaison(reality,calculated):
         if flag:
             not_inside += 1
         not_inside1  +=1
-    print(not_inside/not_inside1)
+    rate_I_NI = not_inside/not_inside1
     error_rate = (sum(errors)/total_gen)*100
-    return error_rate
+    return error_rate,rate_I_NI
 
+def graph(X,Y):
+    x,y = np.array(X),np.array(Y)
+    X_Y_Spline = make_interp_spline(x, y)
+
+
+    X_ = np.linspace(x.min(), x.max(), 500)
+    Y_ = X_Y_Spline(X_)
+
+    plt.plot(X_, Y_)
+    plt.title("Relation between the number of African genomes with the incorrect intervals ratio")
+    plt.xlabel("Number of Afrian genomes")
+    plt.ylabel("Incorrect intervals ratio")
+    plt.show()

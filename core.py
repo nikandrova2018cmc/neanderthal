@@ -1,7 +1,3 @@
-import msprime
-import tskit
-import random
-import time
 import numpy as np
 
 #Function from https://tskit.dev/tutorials/introgression.html
