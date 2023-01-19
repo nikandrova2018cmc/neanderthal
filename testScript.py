@@ -116,9 +116,6 @@ def start():
 
         print("Positions (given as intervals) in the genome inherited from a Neanderthal individual: \n",\
               final_array,end="\n")
-        #print("\n Number of mutations that are present in the individual from Eurasia, but absent from individuals from Africa. Genome is cut in segments of size 10000. \n")
-        #print(seq)
-
 
         states = [0,1]
         S = HMMS.initS(0.95)
@@ -142,4 +139,3 @@ def start():
     print(x,y,sep="  ")
 
     graph(x,y)
-

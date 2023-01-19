@@ -8,15 +8,6 @@ from copy import deepcopy
 random.seed()  
 
 states = [0,1]
-# Compare Africa: ND SECOND STATE
-#S = HMMS.initS(0.95)
-#A = HMMS.initA(1850,2.5e-9,1000,0.05)
-#B = HMMS.initB(1.25e-8,1000,3700,24500)
-
-# Compare ND: ND FIRST STATE
-#S = HMMS.initS(0.05)
-#A = HMMS.initA(1850,2.5e-9,1000,0.95)
-#B = HMMS.initB(1.25e-8,1000,3700,24500)
 
 def initS(p) -> np.array:
     S = np.zeros(2)

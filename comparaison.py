@@ -7,17 +7,17 @@ def comparaison(reality,calculated):
     errors = []
     not_inside = 0
     not_inside1 = 0
-    for real in calculated:
+    for calc in calculated:
         flag = True
-        for calc in reality:
-            start_real,end_real,start_calc,end_calc = real[0],real[1],calc[0],calc[1]
-            maximum_margin = int(end_real-start_real)*0.75
-            if abs(start_real-start_calc) < maximum_margin and abs(end_real-end_calc) < maximum_margin:
-                error = abs(start_real-start_calc) + abs(end_real-end_calc)
+        for real in reality:
+            start_c,end_c,start_r,end_r = calc[0],calc[1],real[0],real[1]
+            maximum_margin = int(end_c-start_c)*0.75
+            if abs(start_c-start_r) < maximum_margin and abs(end_c-end_r) < maximum_margin:
+                error = abs(start_c-start_r) + abs(end_c-end_r)
                 errors.append(error)
                 flag = False
                 break
-            error = abs(start_real-end_real)
+            error = abs(start_c-end_c)
             errors.append(error)
         if flag:
             not_inside += 1
