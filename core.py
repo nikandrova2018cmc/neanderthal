@@ -15,7 +15,7 @@ def get_migrating_tracts(ts):
 
 
 # This function will cut the genomic sequence in segments of length 'cut' and for each segment will count the number of mutations that individual 'ind' has, but which cannot be found in any individual belonging to population 'pop'.
-# p1 is the position of first individual belonging to 'pop' and p2 the number of individual belonging to 'pop'. It is only there for the function to run faster, it can probably done in a cleaner one. TLDR: It is not important.
+# p1 is the position of first individual belonging to 'pop' and p2 the number of individual we want to sample. It is only there for the function to run faster, it can probably done in a cleaner one. TLDR: It is not important.
 
 def createSeqObs(ts,cut,ind,p1,p2,pop) -> list:
     tables = ts.dump_tables()
@@ -29,7 +29,7 @@ def createSeqObs(ts,cut,ind,p1,p2,pop) -> list:
         b = 0
         c = False
         x=0
-        while x < len(v.genotypes): # v.genotypes is the array containing the genotype of all the sampled individuals for the variant 'v'
+        while x < len(v.genotypes) and x < p1+p2: # v.genotypes is the array containing the genotype of all the sampled individuals for the variant 'v'
             if(nodes[x].individual==ind): # Check if this position corresponds to individual 'ind'
                 if(v.genotypes[x]==1): #If individual 'ind' has mutation '1' at this position, we put it in 'b', otherwise 'b' has value 0. At a site with a mutation, the genotype of an individual can take the value 0 or 1. In real life it will take a value on the alphabet A C G T, but this information is not important. 
                     b = 1
@@ -37,7 +37,7 @@ def createSeqObs(ts,cut,ind,p1,p2,pop) -> list:
             elif(nodes[x].population==pop_id): # Check if this position corresponds to an individual in 'pop'
                 if(v.genotypes[x]==b): 
                     c = True # The mutation found in 'ind' is also present in the population 'pop' 
-                    x=p1+p2 # We can skip all the remaining individuals
+                    x=p1+10000 # We can skip all the remaining individuals
     
             x=x+1
         if not c : # If c is False it means that the mutation in 'ind' has not been found in the population 'pop' 
