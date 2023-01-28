@@ -7,7 +7,7 @@ def main():
         begin = Neanderthal()
         vector = [[], [], [], []]
         x = []
-        while begin.s < 30:
+        while begin.s < 100:
             x.append(begin.s)
             for k in range(4):
                 vector[k].append(begin.slow(begin.s)[k])
@@ -27,7 +27,7 @@ def main():
         begin = Neanderthal()
         vector = [[], [], [], []]
         x = []
-        while begin.f < 30:
+        while begin.f < 100:
             x.append(begin.f)
             for k in range(4):
                 vector[k].append(begin.fast(begin.f)[k])
@@ -46,7 +46,7 @@ def main():
         begin = Neanderthal()
         vector = [[], [], [], []]
         x = []
-        while begin.l < 30:
+        while begin.l < 100:
             x.append(begin.l)
             for k in range(4):
                 vector[k].append(begin.length_dna(begin.l)[k])
